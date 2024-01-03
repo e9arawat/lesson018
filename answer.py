@@ -36,8 +36,17 @@ def compound_interest_with_payments(principal, payment, term, rate, end_of_perio
     ans = principal
     ans = formatting(str(round_off(ans)))
     return ans
+import math
+def savings_calculator(present_value, future_value, term, rate, end_of_period=True, n: int=1):
+    if not end_of_period:
+        rate = rate / (1+rate)
+    ans = (future_value - present_value * (1 + rate) ** term) / ((1 + rate) ** term - 1)
+    ans = math.ceil(ans * 100)/100
+    ans = formatting(str(round_off(ans)))
+    return ans 
 
 if __name__ == "__main__":
     print(simple_interest(123456, 23, 0.08))
     print(compound_interest(123456, 23, 0.08))
     print(compound_interest_with_payments(0, 368970.52, 35, 0.10))
+    print(savings_calculator(0, 1e8, 35, 0.10))
