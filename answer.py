@@ -86,11 +86,37 @@ def files_innerjoin(filename1, filename2, common_column):
         csv_writer_inner_join.writerows(final_data)
 
 
+def list_to_dict(data: list):
+    """List of dicts to dict of lists"""
+    ans = {}
+    for dic in data:
+        for key, value in dic.items():
+            if key in ans:
+                ans[key].append(value)
+            else:
+                ans[key] = [value]
+    return ans
 
+def dict_to_list(data: dict):
+    ans = []
+    counter = 1
+    while counter == 1:
+        counter = 0
+        temp = {}
+        for key,value in data.items():
+            if value:
+                counter = 1
+            temp[key] = value[0]
+            if data[key]:
+                data[key].pop()
+        ans.append(temp)
+    return ans
 
 if __name__ == "__main__":
     print(simple_interest(123456, 23, 0.08))
     print(compound_interest(123456, 23, 0.08))
     print(compound_interest_with_payments(0, 368970.52, 35, 0.10))
     print(savings_calculator(0, 1e8, 35, 0.10))
-    print(files_innerjoin('file1.csv', 'file2.csv', 'Name'))
+    # print(files_innerjoin('file1.csv', 'file2.csv', 'Name'))
+    print(list_to_dict([{"name": "a", "age": 21}, {"name": "b", "age": 43}]))
+    print(dict_to_list({"name": ["a", "b"], "age": [21,43]}))
