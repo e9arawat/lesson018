@@ -66,12 +66,12 @@ def files_innerjoin(filename1, filename2, **kwargs):
     # pylint: disable-msg=too-many-locals
     """inner join function on any number of keys"""
     common_column = kwargs.get("common_column", [])
-    with open(filename1, "r", encoding="utf8") as f:
+    with open(filename1, "r", encoding="utf8", newline='\n') as f:
         file1_reader = csv.DictReader(f)
         data1 = list(file1_reader)
         header1 = list(data1[0].keys())
 
-    with open(filename2, "r", encoding="utf8") as f:
+    with open(filename2, "r", encoding="utf8", newline='\n') as f:
         file2_reader = csv.DictReader(f)
         data2 = list(file2_reader)
         header2 = list(data2[0].keys())
@@ -86,7 +86,7 @@ def files_innerjoin(filename1, filename2, **kwargs):
             if all(current_data1[x] == current_data2[x] for x in common_column):
                 current_data1.update(current_data2)
                 final_data.append(current_data1)
-    with open("results.csv", "w", encoding="utf8") as f:
+    with open("results.csv", "w", encoding="utf8", newline='\n') as f:
         result_writer = csv.DictWriter(f, fieldnames=result_header)
         result_writer.writeheader()
         result_writer.writerows(final_data)
@@ -96,18 +96,18 @@ def files_leftouterjoin(filename1, filename2, **kwargs):
     # pylint: disable-msg=too-many-locals
     """left outer join function on any number of keys"""
     common_column = kwargs.get("common_column", [])
-    with open(filename1, "r", encoding="utf8") as f:
+    with open(filename1, "r", encoding="utf8", newline='\n') as f:
         file1_reader = csv.DictReader(f)
         data1 = list(file1_reader)
         header1 = list(data1[0].keys())
 
-    with open(filename2, "r", encoding="utf8") as f:
+    with open(filename2, "r", encoding="utf8", newline='\n') as f:
         file2_reader = csv.DictReader(f)
         data2 = list(file2_reader)
         header2 = list(data2[0].keys())
 
     if any(bool(x not in header1 or x not in header2) for x in common_column):
-        with open("results.csv", "w", encoding="utf8") as f:
+        with open("results.csv", "w", encoding="utf8", newline='\n') as f:
             result_writer = csv.DictWriter(f, fieldnames=header1)
             result_writer.writeheader()
             result_writer.writerows(data1)
@@ -124,7 +124,7 @@ def files_leftouterjoin(filename1, filename2, **kwargs):
         if match == 0:
             final_data.append(current_data1)
 
-    with open("results.csv", "w", encoding="utf8") as f:
+    with open("results.csv", "w", encoding="utf8", newline='\n') as f:
         result_writer = csv.DictWriter(f, fieldnames=result_header)
         result_writer.writeheader()
         result_writer.writerows(final_data)
@@ -134,18 +134,18 @@ def files_rightouterjoin(filename1, filename2, **kwargs):
     # pylint: disable-msg=too-many-locals
     """right outer join function on any number of keys"""
     common_column = kwargs.get("common_column", [])
-    with open(filename1, "r", encoding="utf8") as f:
+    with open(filename1, "r", encoding="utf8", newline='\n') as f:
         file1_reader = csv.DictReader(f)
         data1 = list(file1_reader)
         header1 = list(data1[0].keys())
 
-    with open(filename2, "r", encoding="utf8") as f:
+    with open(filename2, "r", encoding="utf8", newline='\n') as f:
         file2_reader = csv.DictReader(f)
         data2 = list(file2_reader)
         header2 = list(data2[0].keys())
 
     if any(bool(x not in header1 or x not in header2) for x in common_column):
-        with open("results.csv", "w", encoding="utf8") as f:
+        with open("results.csv", "w", encoding="utf8", newline='\n') as f:
             result_writer = csv.DictWriter(f, fieldnames=header2)
             result_writer.writeheader()
             result_writer.writerows(data2)
@@ -162,7 +162,7 @@ def files_rightouterjoin(filename1, filename2, **kwargs):
         if match == 0:
             final_data.append(current_data2)
 
-    with open("results.csv", "w", encoding="utf8") as f:
+    with open("results.csv", "w", encoding="utf8", newline='\n') as f:
         result_writer = csv.DictWriter(f, fieldnames=result_header)
         result_writer.writeheader()
         result_writer.writerows(final_data)
@@ -195,7 +195,7 @@ def dict_to_list(data: dict):
 
 def split_file(filename, split_cols: list):
     """split a large csv file on values of one or more columns into multiple files"""
-    with open(filename, "r", encoding="utf8") as f:
+    with open(filename, "r", encoding="utf8", newline='\n') as f:
         csv_reader = csv.DictReader(f)
         data = list(csv_reader)
         header = data[0].keys()
@@ -207,7 +207,7 @@ def split_file(filename, split_cols: list):
         for i in split_cols:
             file_name += str(x[i])
         file_name += ".csv"
-        with open(file_name, "a", encoding="utf8") as f:
+        with open(file_name, "a", encoding="utf8", newline='\n') as f:
             file_writer = csv.DictWriter(f, fieldnames=header)
             if f.tell() == 0:
                 file_writer.writeheader()
